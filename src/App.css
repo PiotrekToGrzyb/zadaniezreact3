@@ -1,72 +1,44 @@
-.App {
-  max-width: 960px;
+.aplikacja {
+  max-width: 900px;
   margin: 0 auto;
-  padding: 2rem;
-  color: #202534;
+  padding: 20px;
 }
 
-.App h1 {
-  margin: 0 0 1.5rem;
+.aplikacja h1 {
   text-align: center;
 }
 
-.course-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1rem;
-}
-
-.course-card {
-  padding: 1.25rem;
-  border: 1px solid #d5dbe5;
-  border-radius: 0.75rem;
-  background: #fff;
-  box-shadow: 0 3px 12px rgb(25 40 70 / 8%);
-}
-
-.course-card--enrolled {
-  border-color: #27845b;
-  background: #f0faf4;
-}
-
-.course-card h3 {
-  margin-top: 0;
-}
-
-.course-card__name-label {
-  display: block;
-  margin-bottom: 0.35rem;
-}
-
-.course-card input {
-  box-sizing: border-box;
-  width: 100%;
-  margin-bottom: 0.9rem;
-  padding: 0.55rem;
-  border: 1px solid #aeb8c8;
-  border-radius: 0.35rem;
-}
-
-.course-card__actions {
+.lista-kursow {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 16px;
 }
 
-.course-card button {
-  padding: 0.55rem 0.75rem;
-  border: 0;
-  border-radius: 0.35rem;
-  background: #2857a4;
-  color: #fff;
+.karta-kursu {
+  flex: 1 1 220px;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.karta-kursu--zapisany {
+  background: #eaf7ed;
+}
+
+.karta-kursu__etykieta-imienia {
+  display: block;
+}
+
+.karta-kursu input {
+  margin: 8px 0;
+}
+
+.karta-kursu__przyciski {
+  display: flex;
+  gap: 8px;
+}
+
+.karta-kursu button {
+  padding: 8px;
   cursor: pointer;
-}
-
-.course-card button:disabled {
-  background: #aeb5c0;
-  cursor: not-allowed;
-}
-
-.course-card__details {
-  margin-top: 1rem;
 }

@@ -1,48 +1,68 @@
 import { useState } from 'react';
 
+// Wyświetla kurs i pozwala użytkownikowi zarządzać szczegółami oraz zapisem.
 function CourseCard({ title, totalSeats = 3 }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isEnrolled, setIsEnrolled] = useState(false);
-  const [name, setName] = useState('');
-  const availableSeats = totalSeats - (isEnrolled ? 1 : 0);
-  const isFull = availableSeats === 0 && !isEnrolled;
+  const [szczegolyWidoczne, ustawSzczegolyWidoczne] = useState(false);
+  const [czyZapisany, ustawCzyZapisany] = useState(false);
+  const [imie, ustawImie] = useState('');
+  const wolneMiejsca = totalSeats - (czyZapisany ? 1 : 0);
+  const czyBrakMiejsc = wolneMiejsca === 0 && !czyZapisany;
+
+  // Zapisuje w stanie imię wpisane przez użytkownika.
+  function obsluzZmianeImienia(zdarzenie) {
+    ustawImie(zdarzenie.target.value);
+  }
+
+  // Pokazuje lub ukrywa opis kursu.
+  function przelaczSzczegoly() {
+    ustawSzczegolyWidoczne(!szczegolyWidoczne);
+  }
+
+  // Zapisuje użytkownika na kurs lub go z niego wypisuje.
+  function przelaczZapis() {
+    ustawCzyZapisany(!czyZapisany);
+  }
 
   return (
-    <article className={`course-card${isEnrolled ? ' course-card--enrolled' : ''}`}>
-      <h3>{title}</h3>
-      <p>Wolne miejsca: {availableSeats}</p>
 
-      <label className="course-card__name-label" htmlFor={`name-${title}`}>
+
+    <article className={`karta-kursu${czyZapisany ? ' karta-kursu--zapisany' : ''}`}>
+      <h3>{title}</h3>
+      <p>Wolne miejsca: {wolneMiejsca}</p>
+      <label className="karta-kursu__etykieta-imienia" htmlFor={`imie-${title}`}>
         Twoje imię
       </label>
+      
       <input
-        id={`name-${title}`}
-        type="text"
-        value={name}
-        onChange={(event) => setName(event.target.value)}
+        id={`imie-${title}`}
+        value={imie}
+        onChange={obsluzZmianeImienia}
         placeholder="Wpisz imię"
       />
 
-      <div className="course-card__actions">
-        <button type="button" onClick={() => setIsExpanded(!isExpanded)}>
-          {isExpanded ? 'Ukryj szczegóły' : 'Pokaż szczegóły'}
+
+      <div className="karta-kursu__przyciski">
+        <button type="button" onClick={przelaczSzczegoly}>
+          {szczegolyWidoczne ? 'Ukryj szczegóły' : 'Pokaż szczegóły'}
         </button>
         <button
           type="button"
-          onClick={() => setIsEnrolled(!isEnrolled)}
-          disabled={isFull || (!isEnrolled && !name.trim())}
+          onClick={przelaczZapis}
+          disabled={czyBrakMiejsc || (!czyZapisany && !imie.trim())}
         >
-          {isEnrolled ? 'Wypisz się' : 'Zapisz się'}
+          {czyZapisany ? 'Wypisz się' : 'Zapisz się'}
         </button>
       </div>
 
-      {isExpanded && (
-        <p className="course-card__details">
+
+
+      {szczegolyWidoczne && (
+        <p className="karta-kursu__szczegoly">
           Poznaj praktyczne zagadnienia i wykorzystaj je w swoich projektach.
         </p>
       )}
-      {isEnrolled && <p role="status">Jesteś zapisany na ten kurs, {name.trim()}.</p>}
-      {isFull && <p>Brak wolnych miejsc</p>}
+      {czyZapisany && <p role="status">Jesteś zapisany na ten kurs, {imie.trim()}.</p>}
+      {czyBrakMiejsc && <p>Brak wolnych miejsc</p>}
     </article>
   );
 }
